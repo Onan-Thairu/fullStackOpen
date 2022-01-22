@@ -1,2 +1,2 @@
 # fullStackOpen
-Submission repo
+Submissions repo
