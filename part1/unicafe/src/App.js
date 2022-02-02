@@ -16,42 +16,17 @@ const Display = (props) => {
   )
 }
 
-const Total = (props) => {
-  return (
-    <div>
-      <p>Total feedback: {props.good + props.neutral + props.bad}</p>
-    </div>
-  )
-}
-
-const Average = (props) => {
-  return (
-    <div>
-      <p>Average score: {(props.good + props.neutral + props.bad)/3}</p>
-    </div>
-  )
-}
-
-const Positive = (props) => {
-  let good = props.good + props.neutral
-  let totalVotes = props.good + props.neutral + props.bad
-
-  return (
-    <div>
-      <p>Positive: {(good * 100)/ totalVotes} %</p>
-    </div>
-  )
-}
-
 const Statistics = (props) => {
   let good = props.stats.good
   let neutral = props.stats.neutral
   let bad = props.stats.bad
+  let positive = good + neutral
+  let totalVotes = good + neutral + bad
   return (
     <div>
-      <Total good={good} neutral={neutral} bad={bad} />
-      <Average good={good} neutral={neutral} bad={bad} />
-      <Positive good={good} neutral={neutral} bad={bad} />
+      <p>Total feedback: {good + neutral + bad}</p>
+      <p>Average score: {(good + neutral + bad)/3}</p>
+      <p>Positive: {(positive * 100)/ totalVotes} %</p>
     </div>
   )
 }
