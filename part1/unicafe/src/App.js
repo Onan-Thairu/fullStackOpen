@@ -22,13 +22,22 @@ const Statistics = (props) => {
   let bad = props.stats.bad
   let positive = good + neutral
   let totalVotes = good + neutral + bad
-  return (
-    <div>
-      <p>Total feedback: {good + neutral + bad}</p>
-      <p>Average score: {(good + neutral + bad)/3}</p>
-      <p>Positive: {(positive * 100)/ totalVotes} %</p>
-    </div>
-  )
+
+  if (good===0 && neutral===0 && bad===0){
+    return (
+      <div>
+        <h3>No feedback given.</h3>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <p>Total feedback: {good + neutral + bad}</p>
+        <p>Average score: {(good + neutral + bad)/3}</p>
+        <p>Positive: {(positive * 100)/ totalVotes} %</p>
+      </div>
+    )
+  } 
 }
 
 const App = () => {
