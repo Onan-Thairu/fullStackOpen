@@ -33,9 +33,12 @@ const Average = (props) => {
 }
 
 const Positive = (props) => {
+  let good = props.good + props.neutral
+  let totalVotes = props.good + props.neutral + props.bad
+
   return (
     <div>
-      <p>Positive: {(props.good + props.neutral * 100)/(props.good + props.neutral + props.bad)} %</p>
+      <p>Positive: {(good * 100)/ totalVotes} %</p>
     </div>
   )
 }
