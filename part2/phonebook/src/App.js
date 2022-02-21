@@ -1,3 +1,7 @@
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+
 import { useState } from 'react'
 const App = () => {
   const [persons, setPersons] = useState([
@@ -32,11 +36,7 @@ const App = () => {
 
   const handleNumber = (event) => setNewNumber(event.target.value)
 
-  const display = (persons) => persons.map((person) => {
-    return (
-      <p key={person.name}>{person.name}  {person.number}</p>
-      )
-  })
+  
 
   const search = (event) => {
     let userData = event.target.value
@@ -55,22 +55,16 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        <label htmlFor="nameSearch" >
-          Filter shown with name <input type="search" name="q" id="nameSearch" onChange={search} />
-          <p id='searchResults'></p>
-        </label>
-      </div>
-      <form onSubmit={addNew}>
-        <h3>Add a new</h3>
-        <div>Name:   <input onChange={handleName} /></div>
-        <div>Number: <input type="tel" onChange={handleNumber} /> </div>
-        <div>
-          <button type='submit'>Add</button>
-        </div>
-      </form>
+      
+      <Filter onchange={search} />
+      
+      <h3>Add a new</h3>
+      
+      <PersonForm onsubmit={addNew} handlename={handleName} handlenumber={handleNumber} />
+
       <h3>Numbers</h3>
-      {display(persons)}
+      
+      <Persons persons={persons} />
     </div>
   )
 }
