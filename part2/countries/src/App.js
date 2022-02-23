@@ -2,9 +2,7 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 
 const App = () => {
-  const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
-  //const [matchingData, setMatchingData] = useState([])
   
   const resultItems = document.getElementById('matchResults')
 
@@ -42,7 +40,6 @@ const App = () => {
   })
 
   
-
   const handleSearch = (event => {
     setSearch(event.target.value)
   })
