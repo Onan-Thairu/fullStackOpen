@@ -12,14 +12,18 @@ const App = () => {
     .then(response => {
       let data = response.data
       let searchResultsArray = []
+      
+
       if(search){
         // Convert both country name and search field letters to lowercase and try to match.
         searchResultsArray = data.filter(country => country.name.common.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+
+        let matchCountry = searchResultsArray[0]
+        let langObj = matchCountry.languages
+        let languagesArray = Object.values(langObj)
+
         
         if(searchResultsArray.length === 1) {
-          let matchCountry = searchResultsArray[0]
-          let langObj = matchCountry.languages
-          let languagesArray = Object.values(langObj)
           
           resultItems.innerHTML = `
           <h1> ${matchCountry.name.common}</h1>
@@ -29,11 +33,16 @@ const App = () => {
           <p>${languagesArray.map(lang => `<li>${lang}</li>`)}</p>
           <img src=${matchCountry.flags.svg} width=100 height=100 ></img>
           `
+          console.log(matchCountry)
         } else if (searchResultsArray.length > 10) {
           resultItems.textContent = "Too many matches, specify another filter"
         } else if (searchResultsArray.length < 10) {
           resultItems.textContent = ""
-          searchResultsArray.map(item => resultItems.innerHTML += `<li> ${item.name.common} </li>`)
+          console.log(searchResultsArray)
+          function display() {
+            alert("Button clicked.")
+          }
+          searchResultsArray.map(item => resultItems.innerHTML += `<p> ${item.name.common} <input type="button" value="Show" onclick="" />`)
         }
       }
     })
