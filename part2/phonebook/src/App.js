@@ -33,7 +33,10 @@ const App = () => {
       alert(`${newName} is already added to phonebook.`)
     } else {
       const allPersons = [...persons, phoneObj]
-      setPersons(allPersons)
+      axios
+        .post('http://localhost:3001/persons', phoneObj)
+        .then(response => console.log(response))
+        setPersons(allPersons)
     }
     
   })
