@@ -36,20 +36,6 @@
       "id": 7
     },
     {
-<<<<<<< HEAD
-      "name": "Last Person",
-      "number": "+25499798303",
-      "id": 8
-    },
-    {
-      "name": "Sokwe Ndama",
-      "number": "+013471034-11903",
-      "id": 9
-    },
-    {
-      "name": "Nyani Kundule",
-      "number": "+013471034-11903",
-=======
       "name": "Ras Mundu",
       "number": "+25479846789",
       "id": 8
@@ -62,7 +48,6 @@
     {
       "name": "Last Person",
       "number": "+25499798303",
->>>>>>> step8
       "id": 10
     }
   ]
