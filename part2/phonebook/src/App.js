@@ -35,8 +35,7 @@ const App = () => {
       const allPersons = [...persons, phoneObj]
       axios
         .post('http://localhost:3001/persons', phoneObj)
-        .then(response => console.log(response))
-        setPersons(allPersons)
+        .then(response => setPersons(persons.concat(response.data)))
     }
     
   })
