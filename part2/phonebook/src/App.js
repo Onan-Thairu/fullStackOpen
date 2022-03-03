@@ -3,7 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+//import axios from 'axios'
 
 import phoneService from './services/phoneNumbers'
 
@@ -39,7 +39,6 @@ const App = () => {
         .create(phoneObj)
         .then(returnedObj => {
           setPersons(persons.concat(returnedObj))
-          //console.log(persons)
         })
     }
     
@@ -49,7 +48,12 @@ const App = () => {
 
   const handleNumber = (event) => setNewNumber(event.target.value)
 
-  
+  const erase = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      phoneService
+        .delNum(id)
+    }
+  }
 
   const search = (event) => {
     let userData = event.target.value
@@ -77,7 +81,7 @@ const App = () => {
 
       <h3>Numbers</h3>
       
-      <Persons persons={persons} />
+      <Persons persons={persons} erase={erase} />
     </div>
   )
 }
