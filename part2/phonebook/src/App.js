@@ -3,9 +3,10 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 
 import { useState, useEffect } from 'react'
-//import axios from 'axios'
+
 
 import phoneService from './services/phoneNumbers'
+import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -32,9 +33,20 @@ const App = () => {
     }
   
     if(persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook.`)
+      if (window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`)) {
+        axios
+        .get(`http://localhost:3001/persons?name=${newName}`)
+        .then(response => {
+          const updateId = response.data[0].id
+          const oldObj = response.data[0]
+          const newObj = {...oldObj, number:newNumber}
+
+          phoneService
+            .update(updateId, newObj)
+        })
+      }
+        
     } else {
-      //const allPersons = [...persons, phoneObj]
       phoneService
         .create(phoneObj)
         .then(returnedObj => {
