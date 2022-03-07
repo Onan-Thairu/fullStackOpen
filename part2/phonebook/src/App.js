@@ -1,6 +1,7 @@
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 import { useState, useEffect } from 'react'
 
@@ -13,6 +14,7 @@ const App = () => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [actionMessage, setActionMessage] = useState(null)
   
 
   useEffect(() => {
@@ -43,6 +45,12 @@ const App = () => {
 
           phoneService
             .update(updateId, newObj)
+            .then(() => {
+              setActionMessage(`${newName} has been updated`)
+              setTimeout(() => {
+                setActionMessage(null)
+              }, 5000)
+            })
         })
       }
         
@@ -51,6 +59,12 @@ const App = () => {
         .create(phoneObj)
         .then(returnedObj => {
           setPersons(persons.concat(returnedObj))
+        })
+        .then(() => {
+          setActionMessage(`${newName} has been created`)
+          setTimeout(() => {
+            setActionMessage(null)
+          }, 5000)
         })
     }
     
@@ -84,6 +98,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={actionMessage} />
       
       <Filter onchange={search} />
       
