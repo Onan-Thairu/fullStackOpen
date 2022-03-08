@@ -2,13 +2,8 @@
   "persons": [
     {
       "name": "Jid Kim",
-      "number": "0704155037",
+      "number": "7878",
       "id": 12
-    },
-    {
-      "name": "Kuja Mwanzo",
-      "number": "0704155037",
-      "id": 13
     },
     {
       "name": "Ukoo Fulani",
@@ -16,14 +11,9 @@
       "id": 14
     },
     {
-      "name": "Jamaa Wa Ubao",
-      "number": "0704155037",
-      "id": 15
-    },
-    {
-      "name": "Wilberforce Shirandula",
-      "number": "0704155037",
-      "id": 16
+      "name": "Kuja Nami",
+      "number": "9243591051",
+      "id": 17
     }
   ]
 }

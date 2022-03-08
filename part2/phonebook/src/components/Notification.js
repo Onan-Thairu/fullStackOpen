@@ -1,9 +1,9 @@
-const ErrorMessage = ({message}) => {
-    if(message === null) {
+const Notification = ({notification}) => {
+    if(notification === null) {
         return null
     }
     const styling = {
-        color:'red',
+        color: notification.type === 'alert'? 'red': 'green',
         background:'#D4D4D4',
         fontStyle:'italic',
         fontSize:20,
@@ -18,9 +18,10 @@ const ErrorMessage = ({message}) => {
     }
     return (
         <div style={styling}>
-            {message}
+            {notification.message}
         </div>
     )
 }
 
-export default ErrorMessage
+
+export default Notification

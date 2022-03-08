@@ -1,8 +1,7 @@
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import SuccessMessage from './components/SuccessMessage'
-import ErrorMessage from './components/ErrorMessage'
+import Notification from './components/Notification'
 
 import { useState, useEffect } from 'react'
 
@@ -15,9 +14,7 @@ const App = () => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [successMsg, setSuccessMsg] = useState(null)
-  const [errorMsg, setErrorMsg] = useState(null)
-  
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     phoneService
@@ -36,10 +33,10 @@ const App = () => {
       number:newNumber
     }
   
-    if(persons.some(person => person.name === newName)) {
-      if (window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`)) {
+    if(persons.some(person => person.name === phoneObj.name)) {
+      if (window.confirm(`${phoneObj.name} is already added to phonebook. Replace the old number with a new one?`)) {
         axios
-        .get(`http://localhost:3001/persons?name=${newName}`)
+        .get(`http://localhost:3001/persons?name=${phoneObj.name}`)
         .then(response => {
           const updateId = response.data[0].id
           const oldObj = response.data[0]
@@ -47,18 +44,12 @@ const App = () => {
 
           phoneService
             .update(updateId, newObj)
-            .then(() => {
-              setSuccessMsg(`${newName} has been updated`)
-              setTimeout(() => {
-                setSuccessMsg(null)
-              }, 5000)
-            })
+            .then(
+              notify(`${phoneObj.name}'s info has been updated.`)
+            )
         })
         .catch(error => {
-          setErrorMsg(`${newName} has already been removed from server`)
-          setTimeout(() => {
-            setErrorMsg(null)
-          }, 5000)
+          notify(`${phoneObj.name} has already been removed from server`,'alert')
         })
       }
         
@@ -69,10 +60,7 @@ const App = () => {
           setPersons(persons.concat(returnedObj))
         })
         .then(() => {
-          setSuccessMsg(`${newName} has been created`)
-          setTimeout(() => {
-            setSuccessMsg(null)
-          }, 5000)
+          notify(`${phoneObj.name} has been created`)
         })
     }
     
@@ -87,10 +75,8 @@ const App = () => {
       phoneService
         .delNum(id)
         .then(() => {
-          setSuccessMsg(`You have deleted ${name}`)
-          setTimeout(() => {
-            setSuccessMsg(null)
-          }, 5000)
+          notify(`You have deleted ${name}`)
+          setPersons(persons.filter(person => person.id !== id))
         }
         )
     }
@@ -109,14 +95,19 @@ const App = () => {
     }
   }
 
+  const notify = (message, type='info') => {
+    setNotification({message, type})
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+  }
+
 
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <SuccessMessage message={successMsg} />
-
-      <ErrorMessage message={errorMsg} />
+      <Notification notification={notification} />
       
       <Filter onchange={search} />
       
