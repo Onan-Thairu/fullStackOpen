@@ -1,7 +1,8 @@
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import Notification from './components/Notification'
+import SuccessMessage from './components/SuccessMessage'
+import ErrorMessage from './components/ErrorMessage'
 
 import { useState, useEffect } from 'react'
 
@@ -14,7 +15,8 @@ const App = () => {
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  const [actionMessage, setActionMessage] = useState(null)
+  const [successMsg, setSuccessMsg] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null)
   
 
   useEffect(() => {
@@ -46,11 +48,17 @@ const App = () => {
           phoneService
             .update(updateId, newObj)
             .then(() => {
-              setActionMessage(`${newName} has been updated`)
+              setSuccessMsg(`${newName} has been updated`)
               setTimeout(() => {
-                setActionMessage(null)
+                setSuccessMsg(null)
               }, 5000)
             })
+        })
+        .catch(error => {
+          setErrorMsg(`${newName} has already been removed from server`)
+          setTimeout(() => {
+            setErrorMsg(null)
+          }, 5000)
         })
       }
         
@@ -61,9 +69,9 @@ const App = () => {
           setPersons(persons.concat(returnedObj))
         })
         .then(() => {
-          setActionMessage(`${newName} has been created`)
+          setSuccessMsg(`${newName} has been created`)
           setTimeout(() => {
-            setActionMessage(null)
+            setSuccessMsg(null)
           }, 5000)
         })
     }
@@ -78,6 +86,13 @@ const App = () => {
     if (window.confirm(`Delete ${name}?`)) {
       phoneService
         .delNum(id)
+        .then(() => {
+          setSuccessMsg(`You have deleted ${name}`)
+          setTimeout(() => {
+            setSuccessMsg(null)
+          }, 5000)
+        }
+        )
     }
   }
 
@@ -99,7 +114,9 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <Notification message={actionMessage} />
+      <SuccessMessage message={successMsg} />
+
+      <ErrorMessage message={errorMsg} />
       
       <Filter onchange={search} />
       

@@ -1,9 +1,9 @@
-const Notification = ({message}) => {
+const ErrorMessage = ({message}) => {
     if(message === null) {
         return null
     }
     const styling = {
-        color:'green',
+        color:'red',
         background:'#D4D4D4',
         fontStyle:'italic',
         fontSize:20,
@@ -23,4 +23,4 @@ const Notification = ({message}) => {
     )
 }
 
-export default Notification
+export default ErrorMessage
